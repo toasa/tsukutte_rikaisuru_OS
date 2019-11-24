@@ -1,7 +1,9 @@
-src_path = src/00_boot_only
+cur_src = src/00_boot_only
 
-img: ${src_path}/boot.s
-	nasm ${src_path}/boot.s -o ${src_path}/boot.img -l ${src_path}/boot.lst
+img: ${cur_src}/boot.s
+	nasm ${cur_src}/boot.s -o ${cur_src}/boot.img -l ${cur_src}/boot.lst
 
+boot: ${cur_src}/boot.img
+	qemu-system-i386 ${cur_src}/boot.img
 clean:
-	rm ${src_path}/*.img ${src_path}/*.lst
+	rm ${cur_src}/*.img ${cur_src}/*.lst
