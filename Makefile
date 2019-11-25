@@ -1,4 +1,4 @@
-cur_src = src/00_boot_only
+cur_src = src/01_bpb
 
 img: ${cur_src}/boot.s
 	nasm ${cur_src}/boot.s -o ${cur_src}/boot.img -l ${cur_src}/boot.lst
