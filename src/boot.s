@@ -32,13 +32,17 @@ ipl:
     ; その番号をブートドライブを保存
     mov    [BOOT.DRIVE], dl
 
-    ; １文字出力
-    ; AL = 出力文字
-    ; BX: ページ番号と文字色を0に設定
-    mov    al, 'A'
-    mov    ah, 0x0E
-    mov    bx, 0x0000
-    int    0x10
+    push   word 'A'
+    call   putc
+    add    sp, 2
+
+    push   word 'B'
+    call   putc
+    add    sp, 2
+
+    push   word 'C'
+    call   putc
+    add    sp, 2
 
     ; while (1); 無限ループ
     jmp    $
@@ -46,6 +50,8 @@ ipl:
 ALIGN 2, db 0
 BOOT:
 .DRIVE:  dw 0
+
+%include "src/modules/real/putc.s"
 
 ; Boot flag
     times  510 - ($ - $$) db 0x00
