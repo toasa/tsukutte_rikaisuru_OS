@@ -34,18 +34,20 @@ ipl:
     ; その番号をブートドライブを保存
     mov    [BOOT.DRIVE], dl
 
-    cdecl  putc, word 'A'
-    cdecl  putc, word 'B'
-    cdecl  putc, word 'C'
+    cdecl  puts, .s0
 
     ; while (1); 無限ループ
     jmp    $
+
+; 0x0A: 改行, 0x0D: 復帰
+.s0      db "Howdy?", 0x0A, 0x0D, 0
 
 ALIGN 2, db 0
 BOOT:
 .DRIVE:  dw 0
 
-%include "src/modules/real/putc.s"
+; %include "src/modules/real/putc.s"
+%include "src/modules/real/puts.s"
 
 ; Boot flag
     times  510 - ($ - $$) db 0x00
