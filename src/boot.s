@@ -2,7 +2,9 @@
     BOOT_LOAD  equ  0x7C00
     ; IPLのロードアドレスを0x7C00に変更
     ORG    BOOT_LOAD
-    
+
+%include "src/include/macro.s"
+
 ; Entry point
 entry:
     jmp    ipl
@@ -32,17 +34,9 @@ ipl:
     ; その番号をブートドライブを保存
     mov    [BOOT.DRIVE], dl
 
-    push   word 'A'
-    call   putc
-    add    sp, 2
-
-    push   word 'B'
-    call   putc
-    add    sp, 2
-
-    push   word 'C'
-    call   putc
-    add    sp, 2
+    cdecl  putc, word 'A'
+    cdecl  putc, word 'B'
+    cdecl  putc, word 'C'
 
     ; while (1); 無限ループ
     jmp    $
